@@ -1,0 +1,63 @@
+{
+  "collectionName": "components_shared_seos",
+  "info": {
+    "displayName": "seo",
+    "icon": "search",
+    "description": "SEO + GEO metadata for a page or post"
+  },
+  "options": {},
+  "attributes": {
+    "metaTitle": {
+      "type": "string",
+      "required": true,
+      "maxLength": 70
+    },
+    "metaDescription": {
+      "type": "text",
+      "required": true,
+      "maxLength": 170,
+      "minLength": 50
+    },
+    "canonicalURL": {
+      "type": "string"
+    },
+    "keywords": {
+      "type": "text"
+    },
+    "metaRobots": {
+      "type": "string",
+      "default": "index, follow"
+    },
+    "structuredDataType": {
+      "type": "enumeration",
+      "enum": ["BlogPosting", "Article", "NewsArticle"],
+      "default": "BlogPosting",
+      "required": true
+    },
+    "ogTitle": {
+      "type": "string",
+      "maxLength": 70
+    },
+    "ogDescription": {
+      "type": "text",
+      "maxLength": 200
+    },
+    "ogImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "ogType": {
+      "type": "string",
+      "default": "article"
+    },
+    "twitterCard": {
+      "type": "string",
+      "default": "summary_large_image"
+    },
+    "structuredData": {
+      "type": "json"
+    }
+  }
+}

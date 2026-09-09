@@ -1,0 +1,496 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ---- Tasama design tokens (mirrors redesign.css) ---- */
+@theme {
+  --color-paper: #f4f1eb;
+  --color-cream: #f0ece4;
+  --color-ink: #151515;
+  --color-ink-soft: #2b2b2b;
+  --color-muted: #6f7378;
+  --color-line: #d8d1c4;
+  --color-navy: #111827;
+  --color-navy-deep: #070707;
+  --color-black-ink: #050505;
+  --color-gold: #b89254;
+  --color-gold-deep: #8a6d33;
+  --color-gold-light: #dfc79a;
+  --color-gold-eyebrow: #a37430;
+  --color-sage: #9aa39b;
+}
+
+@theme inline {
+  --font-body: var(--font-body), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), "Manrope", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Centered content column, matching the site's .container */
+@utility wrap {
+  width: min(1180px, calc(100% - 3rem));
+  margin-inline: auto;
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.0625rem 1.5rem;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+  .btn-gold {
+    background: var(--color-gold);
+    color: var(--color-navy);
+  }
+  .btn-gold:hover {
+    background: #e0bd7c;
+  }
+  .btn-dark {
+    background: var(--color-navy);
+    color: #fff;
+  }
+  .btn-dark:hover {
+    background: #1c2530;
+  }
+  .btn-outline {
+    border-color: color-mix(in srgb, var(--color-gold) 55%, transparent);
+    color: var(--color-gold-light);
+  }
+  .btn-outline:hover {
+    background: color-mix(in srgb, var(--color-gold) 12%, transparent);
+  }
+
+  /* Vertical rhythm of the marketing sections */
+  .section {
+    padding-block: clamp(4.5rem, 10vw, 8.5rem);
+  }
+
+  /* Numbered marker used throughout the site (01 / 02 / 03) */
+  .marker {
+    font-family: var(--font-display);
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: var(--color-gold);
+  }
+}
+
+/* ---- Prose (article body) themed to the Tasama palette ---- */
+.prose {
+  --tw-prose-body: var(--color-ink-soft);
+  --tw-prose-headings: var(--color-ink);
+  --tw-prose-lead: var(--color-muted);
+  --tw-prose-links: var(--color-gold-deep);
+  --tw-prose-bold: var(--color-ink);
+  --tw-prose-counters: var(--color-gold);
+  --tw-prose-bullets: #c9bfa8;
+  --tw-prose-hr: var(--color-line);
+  --tw-prose-quotes: var(--color-ink);
+  --tw-prose-quote-borders: var(--color-gold);
+  --tw-prose-captions: var(--color-muted);
+  --tw-prose-code: var(--color-ink);
+  --tw-prose-pre-bg: #0c0c0c;
+  --tw-prose-pre-code: #e7e2d6;
+  --tw-prose-th-borders: var(--color-line);
+  --tw-prose-td-borders: var(--color-line);
+  max-width: none;
+}
+
+.prose :where(h1, h2, h3, h4) {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.prose :where(a):hover {
+  text-decoration-color: var(--color-gold);
+}
+
+/* ============================================================
+   Motion — ported from the original redesign.css / script.js
+   ============================================================ */
+
+/* ---- Cinematic brand intro ---- */
+body.intro-active {
+  overflow: hidden;
+}
+
+.brand-intro {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 48%, #3b3b38 0%, #202124 30%, #0d0d0f 62%, #050505 82%),
+    #050505;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.8s cubic-bezier(0.65, 0, 0.35, 1), visibility 0.8s;
+}
+.brand-intro::before,
+.brand-intro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.brand-intro::before {
+  background:
+    radial-gradient(circle at 50% 52%, rgba(223, 199, 154, 0.28), transparent 32%),
+    linear-gradient(115deg, transparent 32%, rgba(184, 146, 84, 0.24) 49%, transparent 62%);
+  transform: translateX(-70%);
+  animation: introSweep 2.2s 0.55s cubic-bezier(0.56, 0, 0.2, 1) forwards;
+}
+.brand-intro::after {
+  background:
+    linear-gradient(90deg, rgba(2, 15, 24, 0.88), transparent 24%, transparent 76%, rgba(2, 15, 24, 0.88)),
+    linear-gradient(0deg, rgba(2, 15, 24, 0.72), transparent 28%, transparent 78%, rgba(2, 15, 24, 0.5));
+  pointer-events: none;
+}
+.intro-gridlines {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 8vw 8vw;
+  animation: introGrid 1.4s 0.25s ease forwards;
+}
+.intro-aura {
+  position: absolute;
+  width: min(62vw, 760px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(231, 198, 118, 0.27);
+  box-shadow: 0 0 80px rgba(19, 62, 78, 0.32), inset 0 0 90px rgba(213, 177, 91, 0.035);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.65);
+  animation: auraRise 2.5s 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.intro-aura::before,
+.intro-aura::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(231, 198, 118, 0.12);
+  border-radius: 50%;
+}
+.intro-aura::before {
+  inset: 9%;
+}
+.intro-aura::after {
+  inset: 19%;
+}
+.intro-logo-wrap {
+  position: relative;
+  z-index: 2;
+  width: min(520px, 76vw);
+  opacity: 0;
+  filter: blur(18px);
+  transform: scale(0.82) translateY(16px);
+  animation: logoEmerge 1.8s 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.intro-logo-wrap::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 16% 7%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(221, 185, 99, 0.2), rgba(42, 96, 111, 0.08) 45%, transparent 72%);
+  filter: blur(16px);
+  animation: logoPulse 2.4s 1s ease-in-out infinite alternate;
+}
+.intro-logo-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 1px 0 rgba(190, 211, 215, 0.28)) drop-shadow(0 18px 38px rgba(0, 0, 0, 0.38));
+}
+.intro-rule {
+  position: absolute;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  transform: translateX(-50%);
+  animation: ruleGrow 1.2s 1.25s ease forwards;
+}
+.intro-rule-top {
+  top: 10%;
+}
+.intro-rule-bottom {
+  bottom: 10%;
+}
+.intro-message {
+  position: absolute;
+  bottom: 8vh;
+  z-index: 2;
+  margin: 0;
+  color: rgba(237, 220, 174, 0.72);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: messageIn 0.8s 1.75s ease forwards;
+}
+.intro-skip {
+  position: absolute;
+  right: 28px;
+  bottom: 24px;
+  z-index: 3;
+  padding: 8px;
+  border: 0;
+  background: none;
+  color: rgba(255, 255, 255, 0.44);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0;
+  cursor: pointer;
+  animation: messageIn 0.7s 1.4s ease forwards;
+}
+.intro-skip:hover {
+  color: #fff;
+}
+.brand-intro.is-leaving {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@keyframes logoEmerge {
+  0% {
+    opacity: 0;
+    filter: blur(18px);
+    transform: scale(0.82) translateY(16px);
+  }
+  58% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1) translateY(0);
+  }
+}
+@keyframes introSweep {
+  to {
+    transform: translateX(70%);
+  }
+}
+@keyframes introGrid {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes auraRise {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes ruleGrow {
+  to {
+    width: 125%;
+  }
+}
+@keyframes messageIn {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes logoPulse {
+  from {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+/* ---- Scroll reveal (IntersectionObserver adds .is-visible) ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Hero skyline drift ---- */
+@keyframes skylineDrift {
+  0% {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.1) translate3d(-1.2%, -0.7%, 0);
+  }
+}
+.hero-skyline {
+  animation: skylineDrift 18s ease-in-out infinite alternate;
+}
+
+/* ---- Service detail hero: black + animated ---- */
+.svc-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #000;
+}
+.svc-hero::before {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  z-index: -1;
+  background: radial-gradient(circle at 82% 12%, rgba(184, 146, 84, 0.2), transparent 42%);
+  animation: svcHeroDrift 14s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.svc-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, #000, transparent 78%);
+  opacity: 0;
+  animation: svcHeroGrid 1.2s 0.15s ease forwards;
+  pointer-events: none;
+}
+.svc-hero-numeral {
+  position: absolute;
+  right: -1vw;
+  bottom: -3vw;
+  z-index: -1;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(180px, 30vw, 460px);
+  line-height: 0.7;
+  letter-spacing: -0.06em;
+  color: rgba(255, 255, 255, 0.04);
+  user-select: none;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: svcNumeralIn 1.4s 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.svc-in {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: svcInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--svc-delay, 0s);
+}
+.svc-rule {
+  height: 1px;
+  width: 0;
+  background: linear-gradient(90deg, var(--color-gold), transparent);
+  animation: svcRule 0.9s 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes svcHeroDrift {
+  from {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(3%, 2%, 0) scale(1.09);
+  }
+}
+@keyframes svcHeroGrid {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes svcNumeralIn {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes svcInUp {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes svcRule {
+  to {
+    width: 120px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-intro {
+    display: none !important;
+  }
+  body.intro-active {
+    overflow: auto;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+  }
+  .hero-skyline {
+    animation: none;
+  }
+  .svc-hero::before,
+  .svc-hero::after {
+    animation: none;
+    opacity: 1;
+  }
+  .svc-hero-numeral {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .svc-in {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .svc-rule {
+    width: 120px;
+    animation: none;
+  }
+}

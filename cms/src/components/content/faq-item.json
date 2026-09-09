@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_content_faq_items",
+  "info": {
+    "displayName": "FAQ item",
+    "icon": "question",
+    "description": "A question/answer pair rendered as FAQPage JSON-LD"
+  },
+  "options": {},
+  "attributes": {
+    "question": {
+      "type": "string",
+      "required": true
+    },
+    "answer": {
+      "type": "text",
+      "required": true,
+      "maxLength": 800
+    }
+  }
+}

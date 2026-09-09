@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_content_key_points",
+  "info": {
+    "displayName": "Key point",
+    "icon": "bulletList",
+    "description": "A single extractable takeaway"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "text",
+      "required": true,
+      "maxLength": 300
+    }
+  }
+}
