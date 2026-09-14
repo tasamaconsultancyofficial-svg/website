@@ -1,13 +1,21 @@
 import { marked } from "marked";
 import sanitizeHtml from "sanitize-html";
 
-const STRAPI_URL = process.env.STRAPI_URL ?? "http://localhost:1337";
+// STRAPI_URL is the internal, server-only address used to fetch data from
+// Strapi (e.g. http://127.0.0.1:1337 in production, avoiding a public round
+// trip). It must never be used to build <img>/<Image> src values — those get
+// embedded in HTML sent to the visitor's browser, which cannot reach an
+// internal/loopback address. Use the publicly reachable media URL instead.
+const STRAPI_MEDIA_URL =
+  process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL ??
+  process.env.STRAPI_URL ??
+  "http://localhost:1337";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
-/** Turn a Strapi media path into an absolute URL. */
+/** Turn a Strapi media path into an absolute, publicly-reachable URL. */
 export function mediaUrl(url?: string | null): string {
   if (!url) return "";
-  return url.startsWith("http") ? url : `${STRAPI_URL}${url}`;
+  return url.startsWith("http") ? url : `${STRAPI_MEDIA_URL}${url}`;
 }
 
 /** Absolute site URL for a path (canonical, JSON-LD @id, OG). */
