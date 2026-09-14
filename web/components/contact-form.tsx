@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SERVICE_OPTIONS } from "@/lib/site";
+import { SERVICE_OPTIONS, SITE } from "@/lib/site";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -48,8 +48,8 @@ export function ContactForm({ defaultService = "" }: { defaultService?: string }
           </strong>
           <p className="mt-1 text-[13px] text-muted">
             We&rsquo;ll be in touch shortly to discuss your business. For anything urgent, call{" "}
-            <a href="tel:+971505698473" className="font-semibold text-gold-deep">
-              050 569 8473
+            <a href={`tel:${SITE.phone}`} className="font-semibold text-gold-deep">
+              {SITE.phoneDisplay}
             </a>
             .
           </p>
@@ -118,7 +118,7 @@ export function ContactForm({ defaultService = "" }: { defaultService?: string }
           <a href="mailto:advisory@tasamaconsultancy.com" className="font-semibold underline">
             advisory@tasamaconsultancy.com
           </a>{" "}
-          or call 050 569 8473.
+          or call {SITE.phoneDisplay}.
         </p>
       )}
       <p className="text-center text-[9px] text-[#98a3a1]">

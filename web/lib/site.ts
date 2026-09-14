@@ -16,7 +16,7 @@ export const SITE = {
   foundingLocation: "Dubai, United Arab Emirates",
   areaServed: ["United Arab Emirates", "GCC", "India"],
   phone: "+971505698473",
-  phoneDisplay: "050 569 8473",
+  phoneDisplay: "+971 50 569 8473",
   whatsapp: "https://wa.me/971505698473",
   email: "advisory@tasamaconsultancy.com",
   address: {
