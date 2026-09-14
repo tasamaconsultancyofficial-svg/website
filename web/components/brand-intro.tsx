@@ -44,7 +44,7 @@ export function BrandIntro() {
       <div className="intro-logo-wrap">
         <span className="intro-rule intro-rule-top" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo-dark-bg.svg" alt={SITE.name} />
+        <img src="/logo-mark.svg" alt={SITE.name} />
         <span className="intro-rule intro-rule-bottom" />
       </div>
       <p className="intro-message">Precision. Integrity. Prosperity.</p>
