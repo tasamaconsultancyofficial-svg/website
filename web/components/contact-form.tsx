@@ -115,8 +115,8 @@ export function ContactForm({ defaultService = "" }: { defaultService?: string }
       {status === "error" && (
         <p className="text-[12px] text-[#a8560c]">
           Something went wrong sending that. Email{" "}
-          <a href="mailto:advisory@tasamaconsultancy.com" className="font-semibold underline">
-            advisory@tasamaconsultancy.com
+          <a href={`mailto:${SITE.email}`} className="font-semibold underline">
+            {SITE.email}
           </a>{" "}
           or call {SITE.phoneDisplay}.
         </p>
