@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import { Breadcrumbs, SectionHeading, Eyebrow, CTABand } from "@/components/ui";
 import { JsonLd } from "@/components/json-ld";
 import { graph, breadcrumbSchema, abs } from "@/lib/schema";
@@ -69,7 +70,8 @@ export default function AboutPage() {
         )}
       />
 
-      <section className="bg-[#111111] text-white">
+      <section className="orb-hero text-white">
+        <span aria-hidden className="orb-hero-glow" />
         <div className="wrap section">
           <Breadcrumbs
             trail={[
@@ -80,7 +82,10 @@ export default function AboutPage() {
           <h1 className="reveal mt-8 max-w-[18ch] font-display text-[clamp(38px,5.4vw,68px)] font-semibold leading-[1.02] tracking-[-0.05em] text-balance">
             A premium GCC advisory firm for businesses built to scale.
           </h1>
-          <p className="mt-6 max-w-[60ch] text-[17px] leading-[1.8] text-white/65">
+          <p
+            className="reveal mt-6 max-w-[60ch] text-[17px] leading-[1.8] text-white/65"
+            style={{ "--reveal-delay": "0.08s" } as CSSProperties}
+          >
             Tasama Management Consultancy is a Dubai-based advisory firm. We combine tax, finance,
             compliance, strategy, business setup and management consulting into a single advisory
             relationship — so leadership teams get one coherent view of obligations, controls and
@@ -96,11 +101,12 @@ export default function AboutPage() {
             eyebrow="What we believe"
             title="Four principles that shape every engagement."
           />
-          <div className="reveal mt-14 grid border-t border-line sm:grid-cols-2">
-            {principles.map((p) => (
+          <div className="mt-14 grid border-t border-line sm:grid-cols-2">
+            {principles.map((p, i) => (
               <article
                 key={p.index}
-                className="border-b border-line p-8 sm:border-r sm:[&:nth-child(2n)]:border-r-0"
+                className="reveal border-b border-line p-8 sm:border-r sm:[&:nth-child(2n)]:border-r-0"
+                style={{ "--reveal-delay": `${i * 0.06}s` } as CSSProperties}
               >
                 <span className="marker">{p.index}</span>
                 <h3 className="mt-6 font-display text-[20px] font-semibold tracking-[-0.02em] text-ink">
@@ -115,7 +121,7 @@ export default function AboutPage() {
 
       <section className="bg-white">
         <div className="wrap section">
-          <Eyebrow>The firm at a glance</Eyebrow>
+          <Eyebrow className="reveal">The firm at a glance</Eyebrow>
           <dl className="reveal mt-10 grid border-t border-line sm:grid-cols-2">
             {facts.map((f) => (
               <div

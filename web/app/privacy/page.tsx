@@ -21,12 +21,12 @@ export default function PrivacyPage() {
             { name: "Privacy Policy", path: PATH },
           ]}
         />
-        <h1 className="mt-8 font-display text-[clamp(32px,4.4vw,48px)] font-semibold tracking-[-0.045em] text-ink">
+        <h1 className="reveal mt-8 font-display text-[clamp(32px,4.4vw,48px)] font-semibold tracking-[-0.045em] text-ink">
           Privacy Policy
         </h1>
-        <p className="mt-3 text-[13px] text-muted">Last updated {new Date().getFullYear()}</p>
+        <p className="reveal mt-3 text-[13px] text-muted">Last updated {new Date().getFullYear()}</p>
 
-        <div className="prose prose-neutral mt-10">
+        <div className="reveal prose prose-neutral mt-10">
           <p>
             {SITE.name} (&ldquo;Tasama&rdquo;, &ldquo;we&rdquo;) respects your privacy. This page
             explains what we collect through this website and how we use it.

@@ -34,6 +34,7 @@ export const PRIMARY_NAV: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
+  { label: "Business Setup", href: "/business-setup" },
   { label: "Ledger.ae", href: "/ledger-ae" },
   { label: "Industries", href: "/industries" },
   { label: "Insights", href: "/blog" },

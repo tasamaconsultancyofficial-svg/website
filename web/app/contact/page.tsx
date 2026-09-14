@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import { Breadcrumbs, Eyebrow } from "@/components/ui";
 import { ContactForm } from "@/components/contact-form";
 import { JsonLd } from "@/components/json-ld";
@@ -54,13 +55,17 @@ export default function ContactPage() {
         })}
       />
 
-      <section className="bg-navy-deep text-white">
+      <section className="orb-hero text-white">
+        <span aria-hidden className="orb-hero-glow" />
         <div className="wrap section pb-0">
           <Breadcrumbs trail={trail} />
           <h1 className="reveal mt-8 max-w-[20ch] font-display text-[clamp(36px,5vw,60px)] font-semibold leading-[1.04] tracking-[-0.05em] text-balance">
             Ready to discuss a serious advisory mandate?
           </h1>
-          <p className="mt-6 max-w-[56ch] text-[16px] leading-[1.8] text-white/65">
+          <p
+            className="reveal mt-6 max-w-[56ch] text-[16px] leading-[1.8] text-white/65"
+            style={{ "--reveal-delay": "0.08s" } as CSSProperties}
+          >
             Tell us where your business is heading. We&rsquo;ll help identify the tax, finance,
             compliance and strategy support required to move with confidence — starting with a
             confidential initial discussion before any scope is agreed.
@@ -68,7 +73,7 @@ export default function ContactPage() {
         </div>
 
         <div className="wrap grid gap-0 pb-0 md:grid-cols-[0.9fr_1.1fr]">
-          <div className="border-t border-white/12 py-12 md:pr-12">
+          <div className="reveal border-t border-white/12 py-12 md:pr-12">
             <Eyebrow tone="light">Direct channels</Eyebrow>
             <ul className="mt-8 space-y-4">
               {channels.map((c) => (
@@ -99,7 +104,10 @@ export default function ContactPage() {
             </ul>
           </div>
 
-          <div className="-mb-px bg-white p-8 text-ink md:mt-12 md:p-12">
+          <div
+            className="reveal -mb-px bg-white p-8 text-ink md:mt-12 md:p-12"
+            style={{ "--reveal-delay": "0.1s" } as CSSProperties}
+          >
             <Eyebrow>Request a discussion</Eyebrow>
             <div className="mt-8">
               <ContactForm />

@@ -21,12 +21,12 @@ export default function TermsPage() {
             { name: "Terms of Service", path: PATH },
           ]}
         />
-        <h1 className="mt-8 font-display text-[clamp(32px,4.4vw,48px)] font-semibold tracking-[-0.045em] text-ink">
+        <h1 className="reveal mt-8 font-display text-[clamp(32px,4.4vw,48px)] font-semibold tracking-[-0.045em] text-ink">
           Terms of Service
         </h1>
-        <p className="mt-3 text-[13px] text-muted">Last updated {new Date().getFullYear()}</p>
+        <p className="reveal mt-3 text-[13px] text-muted">Last updated {new Date().getFullYear()}</p>
 
-        <div className="prose prose-neutral mt-10">
+        <div className="reveal prose prose-neutral mt-10">
           <h2>Use of this website</h2>
           <p>
             This website is provided by {SITE.name} for general information. You may view and share

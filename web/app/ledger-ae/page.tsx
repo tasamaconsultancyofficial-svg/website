@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import { Breadcrumbs, Eyebrow, SectionHeading } from "@/components/ui";
+import { AutomationFlow } from "@/components/automation-flow";
 import { JsonLd } from "@/components/json-ld";
 import { graph, breadcrumbSchema, abs, ORG_ID } from "@/lib/schema";
 
@@ -244,7 +245,8 @@ export default function LedgerAePage() {
       />
 
       {/* 1 — HERO ---------------------------------------------------------- */}
-      <section className="bg-[#111111] text-white">
+      <section className="orb-hero text-white">
+        <span aria-hidden className="orb-hero-glow" />
         <div className="wrap section">
           <Breadcrumbs trail={trail} />
 
@@ -275,6 +277,10 @@ export default function LedgerAePage() {
             <span>OpenRouter multi-LLM</span>
             <span>Self-hosted</span>
             <span>Dubai &middot; UAE &middot; GCC</span>
+          </div>
+
+          <div className="reveal mt-4 border-t border-white/12 pt-8">
+            <AutomationFlow tone="dark" className="w-full" />
           </div>
         </div>
       </section>

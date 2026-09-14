@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import { Breadcrumbs, SectionHeading, CTABand } from "@/components/ui";
 import { JsonLd } from "@/components/json-ld";
 import { graph, breadcrumbSchema, abs } from "@/lib/schema";
@@ -43,13 +44,17 @@ export default function IndustriesPage() {
         )}
       />
 
-      <section className="bg-[#111111] text-white">
+      <section className="orb-hero text-white">
+        <span aria-hidden className="orb-hero-glow" />
         <div className="wrap section">
           <Breadcrumbs trail={trail} />
           <h1 className="reveal mt-8 max-w-[16ch] font-display text-[clamp(38px,5.4vw,68px)] font-semibold leading-[1.02] tracking-[-0.05em] text-balance">
             Advisory for the sectors driving GCC growth.
           </h1>
-          <p className="mt-6 max-w-[58ch] text-[17px] leading-[1.8] text-white/65">
+          <p
+            className="reveal mt-6 max-w-[58ch] text-[17px] leading-[1.8] text-white/65"
+            style={{ "--reveal-delay": "0.08s" } as CSSProperties}
+          >
             The obligations, controls and growth questions differ by sector. Tasama brings pattern
             recognition from each of these industries into the advisory relationship.
           </p>
@@ -58,12 +63,13 @@ export default function IndustriesPage() {
 
       <section className="bg-paper">
         <div className="wrap section">
-          <SectionHeading eyebrow="Industries" title="Where we bring pattern recognition." />
-          <div className="reveal mt-14 grid border-t border-line sm:grid-cols-2">
-            {INDUSTRIES.map((ind) => (
+          <SectionHeading className="reveal" eyebrow="Industries" title="Where we bring pattern recognition." />
+          <div className="mt-14 grid border-t border-line sm:grid-cols-2">
+            {INDUSTRIES.map((ind, i) => (
               <article
                 key={ind.name}
-                className="min-h-[240px] border-b border-line p-9 sm:border-r sm:[&:nth-child(2n)]:border-r-0"
+                className="reveal min-h-[240px] border-b border-line p-9 sm:border-r sm:[&:nth-child(2n)]:border-r-0"
+                style={{ "--reveal-delay": `${(i % 2) * 0.06}s` } as CSSProperties}
               >
                 <span className="marker">{ind.index}</span>
                 <h2 className="mt-8 font-display text-[22px] font-semibold tracking-[-0.02em] text-ink">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { Breadcrumbs, SectionHeading, CTABand } from "@/components/ui";
 import { JsonLd } from "@/components/json-ld";
@@ -40,7 +41,8 @@ export default function ServicesPage() {
         )}
       />
 
-      <section className="bg-[#111111] text-white">
+      <section className="orb-hero text-white">
+        <span aria-hidden className="orb-hero-glow" />
         <div className="wrap section">
           <Breadcrumbs
             trail={[
@@ -51,7 +53,10 @@ export default function ServicesPage() {
           <h1 className="reveal mt-8 max-w-[16ch] font-display text-[clamp(38px,5.4vw,68px)] font-semibold leading-[1.02] tracking-[-0.05em] text-balance">
             Tax, finance and strategy under one advisory roof.
           </h1>
-          <p className="mt-6 max-w-[58ch] text-[17px] leading-[1.8] text-white/65">
+          <p
+            className="reveal mt-6 max-w-[58ch] text-[17px] leading-[1.8] text-white/65"
+            style={{ "--reveal-delay": "0.08s" } as CSSProperties}
+          >
             Six focused services across Corporate Tax, VAT, transfer pricing, finance leadership,
             consulting and company formation. Engage one, or run them together as a single advisory
             relationship covering obligations, controls and growth.
@@ -61,13 +66,14 @@ export default function ServicesPage() {
 
       <section className="bg-paper">
         <div className="wrap section">
-          <SectionHeading eyebrow="Practice areas" title="Where Tasama works." />
-          <div className="reveal mt-14 grid gap-px border-t border-line">
-            {SERVICES.map((s) => (
+          <SectionHeading className="reveal" eyebrow="Practice areas" title="Where Tasama works." />
+          <div className="mt-14 grid gap-px border-t border-line">
+            {SERVICES.map((s, i) => (
               <Link
                 key={s.slug}
                 href={`/services/${s.slug}`}
-                className="group grid gap-6 border-b border-line py-10 transition-[padding,background] duration-200 hover:bg-cream/60 md:grid-cols-[auto_1fr_auto] md:items-start md:gap-10 md:hover:px-4"
+                className="reveal group grid gap-6 border-b border-line py-10 transition-[padding,background] duration-200 hover:bg-cream/60 md:grid-cols-[auto_1fr_auto] md:items-start md:gap-10 md:hover:px-4"
+                style={{ "--reveal-delay": `${i * 0.04}s` } as CSSProperties}
               >
                 <span className="marker pt-1">{s.index}</span>
                 <div>

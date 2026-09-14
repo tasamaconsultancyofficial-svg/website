@@ -459,9 +459,141 @@ body.intro-active {
   }
 }
 
+/* ---- Automation flow diagram (Ledger.ae) ---- */
+.flow-line {
+  stroke-dasharray: 5 9;
+  animation: flowDash 1.6s linear infinite;
+}
+@keyframes flowDash {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+.flow-node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: flowPulse 2.6s ease-in-out infinite;
+}
+@keyframes flowPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+.flow-dot {
+  offset-rotate: 0deg;
+  animation: flowDotMove 2.6s linear infinite;
+}
+@keyframes flowDotMove {
+  from {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  to {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+/* ---- Ambient orb drift: soft light drifting across a dark hero ---- */
+.orb-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #0b0b0b;
+}
+.orb-hero::before,
+.orb-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  border-radius: 50%;
+  filter: blur(64px);
+  pointer-events: none;
+}
+.orb-hero::before {
+  width: min(46vw, 560px);
+  aspect-ratio: 1;
+  top: -14%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(184, 146, 84, 0.38), transparent 70%);
+  animation: orbDriftA 17s ease-in-out infinite alternate;
+}
+.orb-hero::after {
+  width: min(34vw, 420px);
+  aspect-ratio: 1;
+  bottom: -18%;
+  right: -8%;
+  background: radial-gradient(circle, rgba(154, 163, 155, 0.3), transparent 72%);
+  animation: orbDriftB 21s ease-in-out infinite alternate;
+}
+.orb-hero-glow {
+  position: absolute;
+  z-index: -1;
+  width: min(24vw, 320px);
+  aspect-ratio: 1;
+  top: 32%;
+  left: 58%;
+  border-radius: 50%;
+  filter: blur(50px);
+  background: radial-gradient(circle, rgba(223, 199, 154, 0.24), transparent 74%);
+  animation: orbDriftC 13s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes orbDriftA {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(6%, 9%, 0) scale(1.18);
+  }
+}
+@keyframes orbDriftB {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(-9%, -7%, 0) scale(1.12);
+  }
+}
+@keyframes orbDriftC {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.9);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate3d(-8%, 6%, 0) scale(1.1);
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .brand-intro {
     display: none !important;
+  }
+  .orb-hero::before,
+  .orb-hero::after,
+  .orb-hero-glow {
+    animation: none;
+  }
+  .flow-line,
+  .flow-node,
+  .flow-dot {
+    animation: none;
+  }
+  .flow-dot {
+    opacity: 0;
   }
   body.intro-active {
     overflow: auto;

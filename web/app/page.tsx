@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { SectionHeading, Eyebrow, ArrowLink, CTABand } from "@/components/ui";
+import { AutomationFlow } from "@/components/automation-flow";
 import { JsonLd } from "@/components/json-ld";
 import { graph, breadcrumbSchema } from "@/lib/schema";
 import { SERVICES, INDUSTRIES, SITE } from "@/lib/site";
@@ -233,6 +234,75 @@ export default function HomePage() {
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Business Setup */}
+      <section className="bg-[#111111] text-white">
+        <div className="wrap section grid gap-12 md:grid-cols-[0.9fr_1.1fr] md:items-end">
+          <SectionHeading
+            className="reveal"
+            tone="light"
+            eyebrow="Business setup"
+            title={
+              <>
+                Licence to Emirates ID.
+                <br />
+                One team, start to finish.
+              </>
+            }
+            intro="End-to-end company formation across Dubai freezone and mainland, Abu Dhabi, Sharjah and Ras Al Khaimah — the most cost-efficient jurisdiction we work with. We stay with you through visas and on to your Emirates ID."
+          />
+          <div>
+            <div className="reveal grid grid-cols-3 border border-white/15 bg-white/[0.05] backdrop-blur">
+              {[
+                ["~3 days", "to licence issuance"],
+                ["~12 days", "full process, licence to Emirates ID"],
+                ["0–2", "visa package options"],
+              ].map(([stat, label]) => (
+                <div key={stat} className="flex min-h-[140px] flex-col justify-between gap-4 border-white/15 p-4 sm:gap-6 sm:p-7 [&:not(:last-child)]:border-r">
+                  <span className="font-display text-[19px] font-semibold tracking-[-0.02em] text-gold-light sm:text-[30px]">
+                    {stat}
+                  </span>
+                  <span className="text-[11px] leading-[1.5] text-white/55 sm:text-[12px]">{label}</span>
+                </div>
+              ))}
+            </div>
+            <div className="reveal mt-8 flex flex-wrap gap-4">
+              <Link href="/business-setup" className="btn btn-gold">
+                Explore business setup &rarr;
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Ledger.ae */}
+      <section className="bg-paper">
+        <div className="wrap section grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+          <SectionHeading
+            className="reveal"
+            eyebrow="Ledger.ae &middot; by Tasama"
+            title={
+              <>
+                Your ledger, run by
+                <br />
+                13 AI agents.
+              </>
+            }
+            intro="Ledger.ae is our AI-native finance automation suite for UAE businesses. VAT, Corporate Tax, WPS payroll, GoAML and Peppol e-invoicing run in parallel and land as one board-ready CFO report in under two minutes."
+          />
+          <div className="reveal">
+            <div className="border border-line bg-white p-6 sm:p-10">
+              <AutomationFlow tone="light" className="w-full" />
+            </div>
+            <div className="mt-8 flex flex-wrap items-center gap-6">
+              <Link href="/ledger-ae" className="btn btn-dark">
+                Explore Ledger.ae &rarr;
+              </Link>
+              <span className="text-[12px] text-muted">13 agents &middot; one report &middot; under 2 minutes</span>
+            </div>
           </div>
         </div>
       </section>

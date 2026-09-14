@@ -109,7 +109,7 @@ export default async function ServiceCategoryPage({ params }: PageProps) {
       {/* Key takeaways — GEO extractable */}
       <section className="bg-cream">
         <div className="wrap section">
-          <Eyebrow>Key takeaways</Eyebrow>
+          <Eyebrow className="reveal">Key takeaways</Eyebrow>
           <ul className="reveal mt-8 grid gap-5 sm:grid-cols-2">
             {service.keyTakeaways.map((t, i) => (
               <li key={i} className="flex gap-4 border-t border-line pt-5 text-[15px] leading-[1.65] text-ink-soft">
@@ -124,15 +124,16 @@ export default async function ServiceCategoryPage({ params }: PageProps) {
       {/* Sub-services */}
       <section className="bg-paper">
         <div className="wrap section">
-          <Eyebrow>What we deliver</Eyebrow>
-          <h2 className="mt-6 max-w-[16ch] font-display text-[clamp(28px,3.6vw,44px)] font-semibold leading-[1.06] tracking-[-0.04em] text-ink text-balance">
+          <Eyebrow className="reveal">What we deliver</Eyebrow>
+          <h2 className="reveal mt-6 max-w-[16ch] font-display text-[clamp(28px,3.6vw,44px)] font-semibold leading-[1.06] tracking-[-0.04em] text-ink text-balance">
             {service.name} services
           </h2>
-          <div className="reveal mt-12 grid border-t border-line md:grid-cols-2">
+          <div className="mt-12 grid border-t border-line md:grid-cols-2">
             {service.subServices.map((sub, i) => (
               <article
                 key={sub.name}
-                className="border-b border-line p-8 md:[&:nth-child(odd)]:border-r"
+                className="reveal border-b border-line p-8 md:[&:nth-child(odd)]:border-r"
+                style={{ "--reveal-delay": `${i * 0.05}s` } as React.CSSProperties}
               >
                 <span className="marker">{String(i + 1).padStart(2, "0")}</span>
                 <h3 className="mt-6 font-display text-[19px] font-semibold tracking-[-0.02em] text-ink">
@@ -150,11 +151,13 @@ export default async function ServiceCategoryPage({ params }: PageProps) {
       {/* FAQ */}
       <section className="bg-white">
         <div className="wrap section">
-          <Eyebrow>Questions</Eyebrow>
-          <h2 className="mt-6 font-display text-[clamp(26px,3.4vw,40px)] font-semibold tracking-[-0.04em] text-ink">
+          <Eyebrow className="reveal">Questions</Eyebrow>
+          <h2 className="reveal mt-6 font-display text-[clamp(26px,3.4vw,40px)] font-semibold tracking-[-0.04em] text-ink">
             {service.name}, answered
           </h2>
-          <FaqList faqs={service.faqs} />
+          <div className="reveal">
+            <FaqList faqs={service.faqs} />
+          </div>
         </div>
       </section>
 
