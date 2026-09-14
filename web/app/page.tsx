@@ -114,7 +114,7 @@ export default function HomePage() {
                 </ul>
               </div>
               <Link href="/contact" className="btn btn-gold mt-2 w-full">
-                Discuss advisory &nearr;
+                Discuss advisory &rarr;
               </Link>
             </div>
           </div>
