@@ -29,7 +29,7 @@ export function SiteHeader() {
       <div className="wrap flex h-[100px] items-center justify-between">
         <Link href="/" aria-label="Tasama home" className="flex items-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-dark-bg.svg" alt={SITE.name} className="h-14 w-auto md:h-16" />
+          <img src="/logo-mark.svg" alt={SITE.name} className="h-10 w-auto md:h-12" />
         </Link>
 
         <button
