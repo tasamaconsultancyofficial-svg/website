@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -44,6 +45,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${body.variable} ${display.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-paper text-ink">
+        <GoogleTagManager gtmId="GTM-WF4W36Z7" />
+        {/* @next/third-parties only injects the GTM <script>; the <noscript>
+            fallback iframe isn't part of that package, so it's added here
+            to match Google's official install snippet. */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WF4W36Z7"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <JsonLd json={graph(organizationSchema(), websiteSchema())} />
         <BrandIntro />
         <RevealProvider />
