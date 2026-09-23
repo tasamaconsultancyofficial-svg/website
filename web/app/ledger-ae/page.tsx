@@ -19,6 +19,7 @@ export const metadata: Metadata = {
       "13 AI agents. Zero manual reporting. Full UAE regulatory compliance — VAT, Corporate Tax, WPS, GoAML, Peppol e-invoice.",
     url: abs(PATH),
     type: "website",
+    images: [abs("/opengraph-image")],
   },
 };
 
@@ -72,7 +73,13 @@ type IconKey =
   | "ocr"
   | "vendor"
   | "peppol"
-  | "cfo";
+  | "cfo"
+  | "lens"
+  | "chat"
+  | "checklist"
+  | "docalert"
+  | "mail"
+  | "shieldcheck";
 
 const ICON_PATHS: Record<IconKey, string[]> = {
   audit: ["M11 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z", "m20 20-4.35-4.35", "M11 8v3l2 1"],
@@ -105,6 +112,12 @@ const ICON_PATHS: Record<IconKey, string[]> = {
     "M12 16a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z",
     "M6 9a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM6 9l4 1M18 9a2 2 0 1 0 4 0 2 2 0 0 0-4 0ZM18 9l-4 1",
   ],
+  lens: ["M11 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z", "m20 20-4.35-4.35"],
+  chat: ["M4 4h16v12H9l-5 4V4Z", "M8 9h8", "M8 12h5"],
+  checklist: ["M5 4h14v16H5z", "m8.5 9 1.5 1.5L13 7", "M8 14h6", "M8 17h6"],
+  docalert: ["M6 3h9l4 4v14H6z", "M15 3v4h4", "M12 10.5v4", "M12 17h.01"],
+  mail: ["M4 6h16v12H4z", "m4 7 8 6 8-6"],
+  shieldcheck: ["M12 3 5 6v5c0 4.5 3 7.6 7 9 4-1.4 7-4.5 7-9V6l-7-3Z", "m9 12 2 2 4-4"],
 };
 
 function Icon({ name, className = "h-5 w-5" }: { name: IconKey; className?: string }) {
@@ -204,6 +217,89 @@ const PRICING = [
 ];
 
 const aed = (n: number) => `AED ${n.toLocaleString("en-US")}`;
+
+/* --------------------------------------------------------------------------
+   LedgerLens UAE — in-development companion product (clearly labelled
+   "coming soon" throughout; not a shipped Ledger.ae feature).
+   -------------------------------------------------------------------------- */
+
+const LENS_STEPS = [
+  {
+    n: "01",
+    icon: "docalert" as IconKey,
+    title: "Upload and organise",
+    body: "Drag in invoices, bank statements, contracts, and licences from WhatsApp, email, and shared drives. LedgerLens classifies each file and extracts the text automatically.",
+  },
+  {
+    n: "02",
+    icon: "chat" as IconKey,
+    title: "Ask, with evidence",
+    body: "Ask a question in plain English. LedgerLens answers from your client's own documents only, and shows the exact page and excerpt behind every answer.",
+  },
+  {
+    n: "03",
+    icon: "checklist" as IconKey,
+    title: "Close the gaps",
+    body: "Before a VAT review or month-end close, LedgerLens builds a missing-document checklist and drafts the client request email for your review.",
+  },
+];
+
+const LENS_MODULES: { icon: IconKey; name: string; body: string }[] = [
+  {
+    icon: "lens",
+    name: "Document search",
+    body: "Search across an entire client file — or your whole firm — in seconds. No more digging through shared drives for one invoice.",
+  },
+  {
+    icon: "chat",
+    name: "Ask LedgerLens",
+    body: "An evidence-backed assistant that cites the document, page, and excerpt behind every answer — and says so plainly when it finds nothing.",
+  },
+  {
+    icon: "checklist",
+    name: "VAT evidence review",
+    body: "A period-by-period checklist across sales invoices, purchase invoices, credit notes, bank statements, and returns, with a completion score.",
+  },
+  {
+    icon: "docalert",
+    name: "Missing-document tracker",
+    body: "Flags incomplete document packs automatically — a missing bank statement month, an expiring trade licence, a duplicate invoice.",
+  },
+  {
+    icon: "payroll",
+    name: "Client portal",
+    body: "Clients see only their own requests and upload files directly — no more chasing attachments over WhatsApp and email.",
+  },
+  {
+    icon: "mail",
+    name: "Request drafting",
+    body: "LedgerLens drafts the client email listing exactly what's missing and why. Nothing sends until an accountant reviews and approves it.",
+  },
+];
+
+const LENS_PROMPTS = [
+  "Which bank statements are missing for Q2?",
+  "Find sales invoices issued in June.",
+  "Show supporting evidence for this purchase entry.",
+  "What is the VAT registration number in the uploaded documents?",
+  "Which invoices are older than 60 days?",
+  "Draft an email asking for missing bank statements.",
+];
+
+const LENS_ROLES = [
+  { name: "Firm Owner / Partner", body: "Creates client workspaces, assigns the team, and reviews client-facing messages before they go out." },
+  { name: "Accountant / Bookkeeper", body: "Uploads documents, searches the file, runs VAT evidence checks, and drafts requests for missing evidence." },
+  { name: "Reviewer / Manager", body: "Reviews evidence, marks exceptions, and approves or rejects outgoing document requests." },
+  { name: "Client User", body: "Sees only their own company's requests, uploads what's asked for, and tracks status — nothing more." },
+];
+
+const LENS_SECURITY = [
+  "Strict tenant isolation — a firm never sees another firm's clients, and a client never sees another client's files.",
+  "Every AI answer is scoped to documents the signed-in user is actually authorised to see.",
+  "Signed, expiring links for document downloads — never a permanent public URL.",
+  "Encryption in transit and at rest, with an audit log for every upload, view, download, and AI query.",
+  "Client documents are never used to train a public AI model.",
+];
 
 /* --------------------------------------------------------------------------
    Page
@@ -522,7 +618,298 @@ export default function LedgerAePage() {
         </div>
       </section>
 
-      {/* 8 — CTA FOOTER ----------------------------------- */}
+      {/* 8 — LEDGERLENS INTRO ------------------------------ */}
+      <section id="ledgerlens" className="scroll-mt-24 bg-navy-deep text-white">
+        <div className="wrap section">
+          <span
+            aria-hidden
+            className="orb-hero-glow"
+            style={{ opacity: 0.5 }}
+          />
+          <p className="reveal font-mono text-[13px] font-bold uppercase tracking-[0.24em] text-gold">
+            Coming soon &middot; Built by the Ledger.ae team
+          </p>
+          <h2 className="reveal mt-5 max-w-[20ch] font-display text-[clamp(32px,4.6vw,54px)] font-semibold leading-[1.05] tracking-[-0.045em] text-balance">
+            LedgerLens UAE
+          </h2>
+          <p className="reveal mt-3 max-w-[42ch] text-[16px] font-medium text-gold-light">
+            Every financial answer, backed by evidence.
+          </p>
+          <p className="reveal mt-6 max-w-[64ch] text-[16px] leading-[1.85] text-white/65">
+            LedgerLens is a secure, evidence-backed document workspace for UAE accounting firms,
+            bookkeepers, tax advisers, and auditors — built to turn scattered client documents into
+            an organised, searchable file, so your team spends less time hunting for invoices and
+            chasing clients for attachments.
+          </p>
+          <div className="reveal mt-8 flex flex-wrap gap-4">
+            <Link href="/contact" className="btn btn-gold">
+              Join the pilot waitlist &rarr;
+            </Link>
+            <a href="#lens-how-it-works" className="btn btn-outline">
+              See how it works
+            </a>
+          </div>
+          <p className="reveal mt-10 max-w-[60ch] border-l-2 border-gold pl-4 text-[13px] leading-[1.8] text-white/45">
+            LedgerLens is document intelligence software. It does not provide tax, legal, audit, or
+            compliance advice — every answer points back to your own uploaded documents for a
+            qualified accountant to review.
+          </p>
+        </div>
+      </section>
+
+      {/* 9 — LEDGERLENS PROBLEM ---------------------------- */}
+      <section className="bg-paper">
+        <div className="wrap section">
+          <SectionHeading
+            className="reveal"
+            eyebrow="LedgerLens &middot; The problem"
+            title="Client documents are scattered everywhere except where you need them"
+            intro="WhatsApp, email attachments, shared drives, Excel trackers, scanned PDFs. Before every VAT return, close, or audit, someone on the team re-does the same search from scratch."
+          />
+          <div className="reveal mt-14 grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              "Searching for one invoice across five folders and a WhatsApp thread",
+              "Checking whether every month's bank statement actually made it in",
+              "Re-asking a client for a trade licence they sent eight months ago",
+              "Answering “do we have this?” from a colleague, again",
+            ].map((body, i) => (
+              <article
+                key={body}
+                className="reveal flex min-h-[160px] flex-col justify-center border-b border-r border-line p-7"
+                style={{ "--reveal-delay": `${i * 0.05}s` } as CSSProperties}
+              >
+                <p className="text-[14px] leading-[1.7] text-ink-soft">{body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 10 — LEDGERLENS HOW IT WORKS ----------------------- */}
+      <section id="lens-how-it-works" className="scroll-mt-24 bg-white">
+        <div className="wrap section">
+          <SectionHeading
+            className="reveal"
+            eyebrow="LedgerLens &middot; How it works"
+            title="Three steps from scattered files to an evidence-backed answer"
+          />
+          <div className="reveal mt-14 grid gap-8 border-l border-t border-line sm:grid-cols-3">
+            {LENS_STEPS.map((s, i) => (
+              <div
+                key={s.n}
+                className="reveal flex min-h-[220px] flex-col border-b border-r border-line p-7"
+                style={{ "--reveal-delay": `${i * 0.08}s` } as CSSProperties}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex h-10 w-10 items-center justify-center bg-cream text-ink">
+                    <Icon name={s.icon} />
+                  </span>
+                  <span className="marker">{s.n}</span>
+                </div>
+                <h3 className="mt-4 font-display text-[17px] font-semibold tracking-[-0.02em] text-ink">
+                  {s.title}
+                </h3>
+                <p className="mt-2 text-[14px] leading-[1.7] text-muted">{s.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 11 — LEDGERLENS MODULES --------------------------- */}
+      <section className="bg-cream">
+        <div className="wrap section">
+          <SectionHeading
+            className="reveal"
+            eyebrow="LedgerLens &middot; Modules"
+            title="One workspace per client. Everything your team needs, nothing they don't."
+          />
+          <div className="reveal mt-14 grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3">
+            {LENS_MODULES.map((m, i) => (
+              <article
+                key={m.name}
+                className="reveal flex min-h-[190px] flex-col border-b border-r border-line bg-white p-7"
+                style={{ "--reveal-delay": `${i * 0.05}s` } as CSSProperties}
+              >
+                <span className="inline-flex h-10 w-10 items-center justify-center bg-cream text-ink">
+                  <Icon name={m.icon} />
+                </span>
+                <h3 className="mt-4 font-display text-[16px] font-semibold tracking-[-0.02em] text-ink">
+                  {m.name}
+                </h3>
+                <p className="mt-2 text-[13.5px] leading-[1.7] text-muted">{m.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 12 — ASK LEDGERLENS -------------------------------- */}
+      <section className="bg-white">
+        <div className="wrap section">
+          <SectionHeading
+            className="reveal"
+            eyebrow="LedgerLens &middot; Ask LedgerLens"
+            title="Every answer shows its working"
+            intro="Ask a question in plain English. LedgerLens answers only from documents your team is authorised to see, and never invents a figure, a date, or a conclusion."
+          />
+
+          <div className="mt-14 grid gap-10 lg:grid-cols-2">
+            <ul className="reveal space-y-3">
+              {LENS_PROMPTS.map((p) => (
+                <li key={p} className="flex items-start gap-3 border-t border-line pt-3">
+                  <Icon name="lens" className="mt-1 h-4 w-4 shrink-0 text-gold" />
+                  <span className="font-mono text-[13px] leading-[1.65] text-ink-soft">&ldquo;{p}&rdquo;</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="reveal border border-line bg-paper p-7">
+              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-gold-eyebrow">
+                Anatomy of an answer
+              </p>
+              <div className="mt-4 space-y-3 text-[13.5px] leading-[1.7] text-ink-soft">
+                <p><span className="font-semibold text-ink">1. Short answer first</span> — stated clearly, in one or two lines.</p>
+                <p><span className="font-semibold text-ink">2. Evidence, immediately below</span> — the document name, page number, and the exact excerpt it came from, one click from the original file.</p>
+                <p><span className="font-semibold text-ink">3. A safe next step</span> — request the missing document, or ask a qualified accountant to review.</p>
+              </div>
+              <p className="mt-5 border-t border-line pt-4 text-[13px] italic leading-[1.7] text-muted">
+                &ldquo;I could not find supporting evidence in the uploaded documents for this
+                client.&rdquo; — what LedgerLens says when there isn&rsquo;t one, instead of guessing.
+              </p>
+            </div>
+          </div>
+
+          <p className="reveal mt-10 text-[12px] leading-[1.8] text-muted">
+            Document-based assistance only — accountant review required. LedgerLens does not
+            provide tax, legal, audit, or AML advice, and never decides whether a company is
+            compliant.
+          </p>
+        </div>
+      </section>
+
+      {/* 13 — VAT EVIDENCE REVIEW --------------------------- */}
+      <section className="bg-paper">
+        <div className="wrap section">
+          <SectionHeading
+            className="reveal"
+            eyebrow="LedgerLens &middot; VAT evidence review"
+            title="Know what's missing before the review starts, not during it"
+          />
+          <div className="mt-14 grid gap-12 lg:grid-cols-2">
+            <ul className="reveal space-y-3">
+              {[
+                "Sales invoices, purchase invoices, tax invoices, credit notes",
+                "Bank statements, import and export records",
+                "VAT returns, general ledger, trial balance",
+                "Supporting contracts and purchase orders",
+              ].map((f) => (
+                <li key={f} className="flex items-start gap-3 border-t border-line pt-3">
+                  <Check className="mt-1 h-4 w-4 shrink-0 text-gold" />
+                  <span className="text-[14px] leading-[1.65] text-ink-soft">{f}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="reveal border border-line bg-white p-7">
+              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-gold-eyebrow">Per period, per client</p>
+              <p className="mt-3 text-[14px] leading-[1.75] text-ink-soft">
+                Select a client and a VAT period. LedgerLens builds a checklist across every
+                evidence category, and each item is marked <span className="font-semibold text-ink">Available</span>,{" "}
+                <span className="font-semibold text-ink">Missing</span>,{" "}
+                <span className="font-semibold text-ink">Needs review</span>, or{" "}
+                <span className="font-semibold text-ink">Not applicable</span>.
+              </p>
+              <p className="mt-3 text-[14px] leading-[1.75] text-ink-soft">
+                It also flags document-quality issues — a duplicate invoice, an unreadable scan, a
+                missing invoice number or VAT amount — so your reviewer catches them before the
+                client does, or before a filing does.
+              </p>
+              <p className="mt-4 border-t border-line pt-4 text-[12px] text-muted">
+                One click to create the client request for anything missing, or export the full
+                evidence index as CSV or PDF.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 14 — ROLES ----------------------------------------- */}
+      <section className="bg-white">
+        <div className="wrap section">
+          <SectionHeading
+            className="reveal"
+            eyebrow="LedgerLens &middot; Built for the whole team"
+            title="Every seat sees exactly what it should — no more, no less"
+          />
+          <div className="reveal mt-14 grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-4">
+            {LENS_ROLES.map((r, i) => (
+              <article
+                key={r.name}
+                className="reveal flex min-h-[170px] flex-col border-b border-r border-line p-7"
+                style={{ "--reveal-delay": `${i * 0.05}s` } as CSSProperties}
+              >
+                <h3 className="font-display text-[15px] font-semibold tracking-[-0.01em] text-ink">{r.name}</h3>
+                <p className="mt-2 text-[13.5px] leading-[1.7] text-muted">{r.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 15 — LEDGERLENS SECURITY --------------------------- */}
+      <section className="bg-cream">
+        <div className="wrap section">
+          <SectionHeading
+            className="reveal"
+            eyebrow="LedgerLens &middot; Security &amp; trust"
+            title="Built for firms that handle other people's financial records"
+          />
+          <div className="mt-14 grid gap-12 lg:grid-cols-[1fr_auto]">
+            <ul className="reveal space-y-3">
+              {LENS_SECURITY.map((f) => (
+                <li key={f} className="flex items-start gap-3 border-t border-line pt-3">
+                  <Icon name="shieldcheck" className="mt-1 h-4 w-4 shrink-0 text-gold" />
+                  <span className="text-[14px] leading-[1.65] text-ink-soft">{f}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="reveal flex items-center justify-center border border-line bg-white p-8 lg:w-[220px]">
+              <div className="text-center">
+                <Icon name="shieldcheck" className="mx-auto h-9 w-9 text-gold" />
+                <p className="mt-3 font-display text-[14px] font-semibold text-ink">
+                  Isolated by design
+                </p>
+                <p className="mt-1 text-[12px] leading-[1.6] text-muted">
+                  One firm. One client. One workspace at a time.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 16 — LEDGERLENS CTA --------------------------------- */}
+      <section className="bg-navy-deep">
+        <div className="wrap section text-center">
+          <Eyebrow tone="light" className="justify-center">
+            LedgerLens UAE &middot; Coming soon
+          </Eyebrow>
+          <h2 className="reveal mx-auto mt-6 max-w-[22ch] font-display text-[clamp(28px,4vw,46px)] font-semibold leading-[1.08] tracking-[-0.04em] text-white text-balance">
+            Piloting with five UAE accounting firms first
+          </h2>
+          <p className="reveal mx-auto mt-5 max-w-[52ch] text-[15px] leading-[1.8] text-white/60">
+            We&rsquo;re building LedgerLens with a small group of firms before opening it up
+            further. Tell us about your practice and we&rsquo;ll be in touch.
+          </p>
+          <div className="reveal mt-9 flex justify-center">
+            <Link href="/contact" className="btn btn-gold">
+              Join the pilot waitlist &rarr;
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 17 — CTA FOOTER ----------------------------------- */}
       <section className="bg-navy-deep">
         <div className="wrap section text-center">
           <Eyebrow tone="light" className="justify-center">
