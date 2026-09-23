@@ -619,13 +619,12 @@ export default function LedgerAePage() {
       </section>
 
       {/* 8 — LEDGERLENS INTRO ------------------------------ */}
-      <section id="ledgerlens" className="scroll-mt-24 bg-navy-deep text-white">
+      <section
+        id="ledgerlens"
+        className="relative isolate scroll-mt-24 overflow-hidden bg-navy-deep text-white"
+      >
+        <span aria-hidden className="orb-hero-glow" style={{ opacity: 0.5 }} />
         <div className="wrap section">
-          <span
-            aria-hidden
-            className="orb-hero-glow"
-            style={{ opacity: 0.5 }}
-          />
           <p className="reveal font-mono text-[13px] font-bold uppercase tracking-[0.24em] text-gold">
             Coming soon &middot; Built by the Ledger.ae team
           </p>
