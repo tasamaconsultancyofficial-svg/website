@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { Breadcrumbs, Eyebrow, SectionHeading } from "@/components/ui";
 import { AutomationFlow } from "@/components/automation-flow";
+import { RagFlow } from "@/components/rag-flow";
 import { JsonLd } from "@/components/json-ld";
 import { graph, breadcrumbSchema, abs, ORG_ID } from "@/lib/schema";
 
@@ -219,8 +220,7 @@ const PRICING = [
 const aed = (n: number) => `AED ${n.toLocaleString("en-US")}`;
 
 /* --------------------------------------------------------------------------
-   LedgerLens UAE — in-development companion product (clearly labelled
-   "coming soon" throughout; not a shipped Ledger.ae feature).
+   LedgerLens UAE — companion product built by the Ledger.ae team.
    -------------------------------------------------------------------------- */
 
 const LENS_STEPS = [
@@ -626,7 +626,7 @@ export default function LedgerAePage() {
         <span aria-hidden className="orb-hero-glow" style={{ opacity: 0.5 }} />
         <div className="wrap section">
           <p className="reveal font-mono text-[13px] font-bold uppercase tracking-[0.24em] text-gold">
-            Coming soon &middot; Built by the Ledger.ae team
+            Built by the Ledger.ae team
           </p>
           <h2 className="reveal mt-5 max-w-[20ch] font-display text-[clamp(32px,4.6vw,54px)] font-semibold leading-[1.05] tracking-[-0.045em] text-balance">
             LedgerLens UAE
@@ -642,7 +642,7 @@ export default function LedgerAePage() {
           </p>
           <div className="reveal mt-8 flex flex-wrap gap-4">
             <Link href="/contact" className="btn btn-gold">
-              Join the pilot waitlist &rarr;
+              Talk to us about LedgerLens &rarr;
             </Link>
             <a href="#lens-how-it-works" className="btn btn-outline">
               See how it works
@@ -787,6 +787,82 @@ export default function LedgerAePage() {
         </div>
       </section>
 
+      {/* 12b — WHAT IS RAG --------------------------------- */}
+      <section className="bg-paper">
+        <div className="wrap section grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <SectionHeading
+            className="reveal"
+            eyebrow="LedgerLens &middot; The technology"
+            title="Why this is not just a chatbot bolted onto your file server"
+            intro="A generic AI chatbot answers from whatever it learned during training — it can sound confident and still be wrong about your client's numbers. LedgerLens uses a different approach, called retrieval-augmented generation, or RAG."
+          />
+          <div className="reveal grid gap-px border-l border-t border-line sm:grid-cols-2">
+            {[
+              {
+                title: "A generic chatbot",
+                body: "Answers from general training data. No idea what's in your client's actual documents. Will guess at a figure, a date, or a VAT number rather than say it doesn't know.",
+              },
+              {
+                title: "LedgerLens (RAG)",
+                body: "Answers only from the specific document passages retrieved for that question, scoped to the client the user is authorised to see. Shows the source. Says so when nothing matches.",
+              },
+            ].map((c) => (
+              <article key={c.title} className="border-b border-r border-line bg-white p-7">
+                <h3 className="font-display text-[16px] font-semibold tracking-[-0.02em] text-ink">
+                  {c.title}
+                </h3>
+                <p className="mt-2 text-[13.5px] leading-[1.7] text-muted">{c.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 12c — HOW THE RAG PIPELINE WORKS -------------------- */}
+      <section className="relative isolate overflow-hidden bg-navy-deep text-white">
+        <span aria-hidden className="orb-hero-glow" style={{ opacity: 0.4 }} />
+        <div className="wrap section">
+          <SectionHeading
+            className="reveal"
+            tone="light"
+            eyebrow="LedgerLens &middot; How retrieval works"
+            title="Four steps between a question and a cited answer"
+            intro="Nothing here is guesswork. Every stage narrows the model down to exactly the text it's allowed to use — and nothing else."
+          />
+          <div className="reveal mt-14 overflow-x-auto">
+            <RagFlow tone="dark" className="w-full min-w-[640px]" />
+          </div>
+          <div className="reveal mt-12 grid gap-8 border-t border-white/12 pt-8 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                title: "Documents",
+                body: "Every uploaded invoice, statement, and contract is stored, then OCR'd and split into passages.",
+              },
+              {
+                title: "Chunk & embed",
+                body: "Each passage is converted into a vector — a numeric fingerprint of its meaning — and indexed.",
+              },
+              {
+                title: "Scoped retrieval",
+                body: "A question retrieves only the closest-matching passages, filtered to that firm and that client. Nothing else exists as far as the model is concerned.",
+              },
+              {
+                title: "Grounded answer",
+                body: "The model drafts an answer using only the retrieved text, with a citation back to the document and page it came from.",
+              },
+            ].map((s, i) => (
+              <div key={s.title} className="border-l-2 border-gold pl-4">
+                <span className="marker">{String(i + 1).padStart(2, "0")}</span>
+                <h3 className="mt-3 font-display text-[15px] font-semibold tracking-[-0.01em] text-white">
+                  {s.title}
+                </h3>
+                <p className="mt-2 text-[13px] leading-[1.65] text-white/55">{s.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* 13 — VAT EVIDENCE REVIEW --------------------------- */}
       <section className="bg-paper">
         <div className="wrap section">
@@ -888,21 +964,22 @@ export default function LedgerAePage() {
       </section>
 
       {/* 16 — LEDGERLENS CTA --------------------------------- */}
-      <section className="bg-navy-deep">
+      <section className="relative isolate overflow-hidden bg-navy-deep">
+        <span aria-hidden className="orb-hero-glow" style={{ opacity: 0.45 }} />
         <div className="wrap section text-center">
           <Eyebrow tone="light" className="justify-center">
-            LedgerLens UAE &middot; Coming soon
+            LedgerLens UAE
           </Eyebrow>
           <h2 className="reveal mx-auto mt-6 max-w-[22ch] font-display text-[clamp(28px,4vw,46px)] font-semibold leading-[1.08] tracking-[-0.04em] text-white text-balance">
-            Piloting with five UAE accounting firms first
+            See it running on your own client files
           </h2>
           <p className="reveal mx-auto mt-5 max-w-[52ch] text-[15px] leading-[1.8] text-white/60">
-            We&rsquo;re building LedgerLens with a small group of firms before opening it up
-            further. Tell us about your practice and we&rsquo;ll be in touch.
+            Tell us about your practice and the clients you&rsquo;d want to start with, and
+            we&rsquo;ll walk you through LedgerLens directly.
           </p>
           <div className="reveal mt-9 flex justify-center">
             <Link href="/contact" className="btn btn-gold">
-              Join the pilot waitlist &rarr;
+              Talk to us about LedgerLens &rarr;
             </Link>
           </div>
         </div>
